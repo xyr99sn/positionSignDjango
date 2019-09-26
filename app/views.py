@@ -8,7 +8,7 @@ import random
 import math
 from app.utils.http import JsonResponse
 from app.utils.decorators import login_required
-from app.utils.redisServer import record_add, get_begin_to_end_score
+from app.utils.redisServer import record_add, get_begin_to_end_score, get_order_by_user
 from django.utils import timezone
 from datetime import datetime
 from .config import APPID, APPSECRET
@@ -69,6 +69,7 @@ def loginUser(request):
                     }
                     login_user = User.objects.create(**user)
                     login(request, login_user)
+                    record_add(login_user.id, 0)
                     return HttpResponse(json.dumps({'status': True, 'msg': '第一次登录成功'}))
             else:
                 return HttpResponse(json.dumps({'status': False, 'msg': '获取openid失败'}))
@@ -200,9 +201,36 @@ def getPositionList(request):
 
 
 def getScoreOrder(request):
+    try:
+        user_id = request.session[SESSION_KEY]
+    except KeyError:
+        response = JsonResponse(status=False, message='用户未登录')
+        return response
     if request.method == "POST":
-        begin_page = request.POST.get('begin')
-        end_page = request.POST.get('end')
+        rank = get_order_by_user(user_id)
+        begin = request.POST.get('begin') * 10
+        end = request.POST.get('end') * 10
+
+        score = 0
+        sign_list = Record.objects.filter(user_id=user.id).filter(is_signed=1)
+        for sign in sign_list:
+            score = score + sign.score
+        
+        response = JsonResponse(status=False, message='获取成功')
+        user = User.objects.get(id=user_id)
+        order = {
+            'nickname': user.wx_nickname,
+            'avatar': user.wx_avatar,
+            'score': score,
+            'rank': rank
+        }
+        orderList = []
+        orders = get_begin_to_end_score(begin, end)
+        for single_order in orders:
+            
+
+        response.add_value('order', order)
+        response.add_value('orderList', orderList)
     else:
         response = JsonResponse(status=False, message='访问方式错误')
         return response
@@ -250,7 +278,9 @@ def addRecord(request):
                         new_record.position = position
                         new_record.transcript = position.transcript
                         new_record.save()
+
                         record_add(user.id, fixed_score + lucky_score)
+
                         try:
                             Join.objects.get(user=user).filter(transcript=position.transcript)
                         except ObjectDoesNotExist:
@@ -302,7 +332,7 @@ def backendUser(request):
     users = User.objects.all()
     for user in users:
         score = 0
-        sign_number = Record.objects.filter(user_id=user.id).count()
+        sign_number = Record.objects.filter(user_id=user.id).filter(is_signed=1).count()
         sign_list = Record.objects.filter(user_id=user.id).filter(is_signed=1)
         for sign in sign_list:
             score = score + sign.score
