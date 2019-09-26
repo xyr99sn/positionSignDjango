@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="/static/css/bus.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.0/js/bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+
+    
+    <script type="text/javascript">
+        var data10 = [
+            {time:"7:30",range:"校本部图书馆前坪→铁道校区图书馆前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区图书馆前坪",num:"2辆",},
+            {time:"7:40",range:"校本部图书馆前坪→新校区艺术楼（星期六班车）",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼",num:"1辆"}
+        ];
+        var data11 = [
+            {time:"8:00",range:"校本部图书馆前坪→铁道校区办公楼前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区办公楼前坪",num:"1辆",},
+            {time:"8:00",range:"校本部图书馆前坪→铁道校区办公楼前坪",route:"校本部图书馆前坪→南校区一教学楼前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区办公楼前坪",num:"1辆"}
+        ];
+        var data12 = [
+            {time:"9:00",range:"校本部图书馆前坪→铁道校区图书馆前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区办公楼前坪",num:"1辆",},
+            {time:"9:30",range:"校本部图书馆前坪→铁道校区图书馆前坪",route:"校本部图书馆前坪→南校区一教学楼前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区办公楼前坪",num:"1辆"},
+            {time:"9:55",range:"校本部图书馆前坪→铁道校区办公楼前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区办公楼前坪",num:"1辆",},
+            {time:"9:55",range:"校本部图书馆前坪→铁道校区办公楼前坪",route:"校本部图书馆前坪→南校区一教学楼前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区办公楼前坪",num:"1辆"},
+            {time:"9:55",range:"校本部图书馆前坪→新校区→湘雅医学院新校区→湘雅医学院老校区",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→湘雅医学院新校区→湘雅医学院老校区→校本部图书馆前坪",num:"1辆"},
+        ];
+        var data13 = [
+            {time:"11:00",range:"校本部图书馆前坪→铁道校区图书馆前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区图书馆前坪",num:"1辆",},
+            {time:"11:50",range:"校本部图书馆前坪→铁道校区图书馆前坪",route:"校本部图书馆前坪→南校区一教学楼前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区图书馆前坪",num:"1辆"},
+            {time:"11:50",range:"校本部图书馆前坪→铁道校区图书馆前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区图书馆前坪",num:"1辆",},
+            {time:"11:50",range:"校本部图书馆前坪→铁道校区办公楼前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区办公楼前坪",num:"1辆"},
+            {time:"11:50",range:"校本部图书馆前坪→湘雅医学院老校区",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→湘雅医学院老校区",num:"1辆"},
+            {time:"11:50",range:"校本部图书馆前坪→湘雅医学院新校区",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→湘雅医学院新校区",num:"1辆"},
+            {time:"11:50",range:"校本部图书馆前坪→湘雅医学院新校区",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→湘雅医学院新校区",num:"1辆"},
+            {time:"11:50",range:"校本部图书馆前坪→科教新村",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→科教新村",num:"1辆"},
+        ];
+        var data14 = [
+            {time:"13:30",range:"校本部图书馆前坪→铁道校区图书馆前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区图书馆前坪",num:"1辆"},
+        ];
+        var data15 = [
+            {time:"14:00",range:"校本部图书馆前坪→铁道校区办公楼前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区办公楼前坪",num:"1辆"},
+            {time:"14:15",range:"校本部图书馆前坪→新校区艺术楼",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼",num:"1辆"},
+        ];
+        var data16 = [
+            {time:"15:10",range:"校本部图书馆前坪→新校区→湘雅医学院新校区→湘雅医学院老校区",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→湘雅医学院新校区→湘雅医学院老校区→校本部图书馆前坪",num:"1辆",},
+            {time:"15:20",range:"校本部图书馆前坪→铁道校区图书馆前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区图书馆前坪",num:"1辆"},
+            {time:"15:50",range:"校本部图书馆前坪→铁道校区办公楼前坪",route:"校本部图书馆前坪→南校区一教学楼前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区办公楼前坪",num:"1辆",},
+        ];
+        var data17 = [
+            {time:"17:30",range:"校本部图书馆前坪→铁道校区图书馆前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区图书馆前坪",num:"1辆",},
+            {time:"17:30",range:"校本部图书馆前坪→铁道校区办公楼前坪",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区办公楼前坪",num:"1辆",},
+            {time:"17:30",range:"校本部图书馆前坪→科教新村",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→科教新村",num:"1辆",},
+            {time:"17:30",range:"校本部图书馆前坪→东塘",route:"校本部图书馆前坪→东塘",num:"1辆",},
+            {time:"17:30",range:"校本部图书馆前坪→湘雅医学院老校区",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→湘雅医学院老校区",num:"1辆",},
+            {time:"17:30",range:"校本部图书馆前坪→湘雅医学院新校区",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→湘雅医学院新校区",num:"1辆",},
+            {time:"17:50",range:"校本部图书馆前坪→铁道校区图书馆前坪",route:"校本部图书馆前坪→南校区一教学楼前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→铁道校区图书馆前坪",num:"1辆",},
+            {time:"17:50",range:"校本部图书馆前坪→湘雅医学院老校区",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→湘雅医学院新校区→湘雅医学院老校区",num:"1辆",},
+        ];
+        var data18 = [
+            {time:"18:40",range:"校本部图书馆前坪→新校区艺术楼",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼",num:"1辆",},
+        ];
+        var data19 = [
+            {time:"20:50",range:"校本部图书馆前坪→湘雅医学院新校区→湘雅医学院老校区",route:"校本部图书馆前坪→升华学生公寓大门→新校区教学楼D座南坪→新校区艺术楼→湘雅医学院新校区→湘雅医学院老校区",num:"1辆",},
+        ];
+        var data20 = [
+            {time:"7:20",range:"铁道校区办公楼前坪→校本部图书馆前坪",route:"铁道校区办公楼前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+            {time:"7:20",range:"铁道校区办公楼前坪→校本部图书馆前坪",route:"铁道校区办公楼前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆"},
+            {time:"7:35",range:"铁道校区办公楼前坪→校本部图书馆前坪",route:"铁道校区办公楼前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data21 = [
+            {time:"9:20",range:"铁道校区办公楼前坪→校本部图书馆前坪",route:"铁道校区办公楼前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆"},
+            {time:"9:20",range:"铁道校区办公楼前坪→校本部图书馆前坪",route:"铁道校区办公楼前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→南校区一教学楼前坪→校本部图书馆前坪",num:"1辆"},
+        ];
+        var data22 = [
+            {time:"13:20",range:"铁道校区办公楼前坪→校本部图书馆前坪",route:"铁道校区办公楼前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data23 = [
+            {time:"14:10",range:"铁道校区办公楼前坪→校本部图书馆前坪",route:"铁道校区办公楼前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data24 = [
+            {time:"15:20",range:"铁道校区办公楼前坪→校本部图书馆前坪",route:"铁道校区办公楼前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→南校区一教学楼前坪→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data30 = [
+            {time:"7:25",range:"铁道校区图书馆前坪→新校区教学楼D座南坪（星期六班车）",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪",num:"1辆",},
+            {time:"7:35",range:"铁道校区图书馆前坪→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→南校区一教学楼前坪→校本部图书馆前坪",num:"1辆"},
+            {time:"7:35",range:"铁道校区图书馆前坪→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data31 = [
+            {time:"8:00",range:"铁道校区图书馆前坪→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"2辆",},
+        ];
+        var data32 = [
+            {time:"10:00",range:"铁道校区图书馆前坪→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data33 = [
+            {time:"11:00",range:"铁道校区图书馆前坪→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→南校区一教学楼前坪→校本部图书馆前坪",num:"1辆",},
+            {time:"11:50",range:"铁道校区图书馆前坪→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆"},
+        ];
+        var data34 = [
+            {time:"14:10",range:"铁道校区图书馆前坪→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→南校区一教学楼前坪→校本部图书馆前坪",num:"1辆",},
+            {time:"14:30",range:"铁道校区图书馆前坪→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆"},
+            {time:"14:30",range:"铁道校区图书馆前坪→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data35 = [
+            {time:"15:50",range:"铁道校区图书馆前坪→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data36 = [
+            {time:"17:50",range:"铁道校区图书馆前坪→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data40 = [
+            {time:"7:15",range:"湘雅医学院老校区→校本部图书馆前坪",route:"湘雅医学院老校区→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+            {time:"7:30",range:"湘雅医学院老校区→校本部图书馆前坪",route:"湘雅医学院老校区→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆"},
+            {time:"7:25",range:"湘雅医学院老校区→湘雅医学院新校区",route:"湘雅医学院老校区→湘雅医学院新校区",num:"1辆",},
+            {time:"7:35",range:"湘雅医学院老校区→湘雅医学院新校区",route:"湘雅医学院老校区→湘雅医学院新校区",num:"1辆",},
+        ];
+        var data41 = [
+            {time:"9:20",range:"湘雅医学院老校区→校本部图书馆前坪",route:"湘雅医学院老校区→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+            {time:"9:20",range:"湘雅医学院老校区→湘雅医学院新校区",route:"湘雅医学院老校区→湘雅医学院新校区",num:"1辆",},
+        ];
+        var data42 = [
+            {time:"12:00",range:"湘雅医学院老校区→湘雅医学院新校",route:"湘雅医学院老校区→湘雅医学院新校区大门",num:"1辆",},
+        ];
+        var data43 = [
+            {time:"13:10",range:"湘雅医学院老校区→湘雅医学院新校区→校本部图书馆前坪",route:"铁道校区图书馆前坪→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→南校区一教学楼前坪→校本部图书馆前坪",num:"1辆",},
+            {time:"13:30",range:"湘雅医学院老校区→湘雅医学院新校区",route:"湘雅医学院老校区→湘雅医学院新校区",num:"1辆"},
+        ];
+        var data44 = [
+            {time:"14:00",range:"湘雅医学院老校区→校本部图书馆前坪",route:"湘雅医学院老校区→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+            {time:"14:15",range:"湘雅医学院老校区→湘雅医学院新校区",route:"湘雅医学院老校区→湘雅医学院新校区",num:"2辆"},
+        ];
+        var data45 = [
+            {time:"15:25",range:"湘雅医学院老校区→湘雅医学院新校区",route:"湘雅医学院老校区→湘雅医学院新校区",num:"1辆",},
+        ];
+        var data46 = [
+            {time:"17:30",range:"湘雅医学院老校区→湘雅医学院新校区",route:"湘雅医学院老校区→湘雅医学院新校区大门",num:"1辆",},
+        ];
+        var data50 = [
+            {time:"10:00",range:"湘雅医学院新校区→湘雅医学院老校区",route:"湘雅医学院新校区→湘雅医学院老校区",num:"1辆",},
+        ];
+        var data51 = [
+            {time:"12:00",range:"湘雅医学院新校区→湘雅医学院老校区",route:"湘雅医学院新校区→湘雅医学院老校区",num:"2辆",},
+        ];
+        var data52 = [
+            {time:"15:50",range:"湘雅医学院新校区→湘雅医学院老校区",route:"湘雅医学院新校区→湘雅医学院老校区",num:"1辆",},
+        ];
+        var data53 = [
+            {time:"17:30",range:"湘雅医学院新校区→湘雅医学院老校区",route:"湘雅医学院新校区→湘雅医学院老校区",num:"2辆",},
+            {time:"17:50",range:"湘雅医学院新校区→湘雅医学院老校区",route:"湘雅医学院新校区→湘雅医学院老校区",num:"1辆",},
+        ];
+        var data60 = [
+            {time:"7:20",range:"湘雅医学院新校区大门→校本部图书馆前坪",route:"湘雅医学院新校区大门→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+            {time:"7:30",range:"湘雅医学院新校区大门→校本部图书馆前坪",route:"湘雅医学院新校区大门→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+            {time:"7:30",range:"湘雅医学院新校区大门→湘雅医学院老校区",route:"湘雅医学院新校区大门→湘雅医学院老校区",num:"1辆",},
+        ];
+        var data61 = [
+            {time:"14:00",range:"湘雅医学院新校区大门→校本部图书馆前坪",route:"湘雅医学院新校区大门→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+            {time:"14:10",range:"湘雅医学院新校区大门→湘雅医学院老校区",route:"湘雅医学院新校区大门→湘雅医学院老校区",num:"1辆",},
+        ];
+        var data70 = [
+            {time:"9:50",range:"新校区艺术楼→校本部图书馆前坪",route:"新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data71 = [
+            {time:"11:50",range:"新校区艺术楼→校本部图书馆前坪",route:"新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+            {time:"11:55",range:"新校区艺术楼→校本部图书馆前坪（星期六班车）",route:"新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+            {time:"11:55",range:"新校区教学楼D座南坪→铁道校区图书馆前坪（星期六班车）",route:"新校区教学楼D座南坪→新校区艺术楼→铁道校区图书馆前坪",num:"1辆",},
+        ];
+        var data72 = [
+            {time:"15:50",range:"新校区艺术楼→校本部图书馆前坪",route:"新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data73 = [
+            {time:"17:50",range:"新校区艺术楼→校本部图书馆前坪",route:"新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data74 = [
+            {time:"20:50",range:"新校区艺术楼→校本部图书馆前坪",route:"新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+            {time:"20:50",range:"新校区艺术楼→铁道校区图书馆前坪",route:"新校区教学楼D座南坪→新校区艺术楼→铁道校区图书馆前坪",num:"1辆",},
+        ];
+        var data80 = [
+            {time:"7:35",range:"科教新村→校本部图书馆前坪",route:"科教新村→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data81 = [
+            {time:"14:05",range:"科教新村→校本部图书馆前坪",route:"科教新村→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        var data90 = [
+            {time:"7:10",range:"东塘→校本部图书馆前坪",route:"东塘→新校区艺术楼→新校区教学楼D座南坪→升华学生公寓大门→校本部图书馆前坪",num:"1辆",},
+        ];
+        function tosubmit() {
+            
+            var table = "<table border='1', cellspacing='0'>";
+            table = table + "<td>发车时间</td><td>行车区间</td><td>行车路线</td><td>车辆数</td>";
+            if (time.value == 0) {
+                if (departure.value == 0) {
+                    for (var i = 0; i < data10.length; i++) {
+                        table += "<tr>";
+                        for (var key in data10[i]) {
+                            table = table + "<td>" + data10[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data11.length; i++) {
+                        table += "<tr>";
+                        for (var key in data11[i]) {
+                            table = table + "<td>" + data11[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data12.length; i++) {
+                        table += "<tr>";
+                        for (var key in data12[i]) {
+                            table = table + "<td>" + data12[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data13.length; i++) {
+                        table += "<tr>";
+                        for (var key in data13[i]) {
+                            table = table + "<td>" + data13[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data14.length; i++) {
+                        table += "<tr>";
+                        for (var key in data14[i]) {
+                            table = table + "<td>" + data14[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data15.length; i++) {
+                        table += "<tr>";
+                        for (var key in data15[i]) {
+                            table = table + "<td>" + data15[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data16.length; i++) {
+                        table += "<tr>";
+                        for (var key in data16[i]) {
+                            table = table + "<td>" + data16[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data17.length; i++) {
+                        table += "<tr>";
+                        for (var key in data17[i]) {
+                            table = table + "<td>" + data17[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data18.length; i++) {
+                        table += "<tr>";
+                        for (var key in data18[i]) {
+                            table = table + "<td>" + data18[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data19.length; i++) {
+                        table += "<tr>";
+                        for (var key in data19[i]) {
+                            table = table + "<td>" + data19[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    
+                }
+                if (departure.value == 1) {
+                    for (var i = 0; i < data20.length; i++) {
+                        table += "<tr>";
+                        for (var key in data20[i]) {
+                            table = table + "<td>" + data20[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data21.length; i++) {
+                        table += "<tr>";
+                        for (var key in data21[i]) {
+                            table = table + "<td>" + data21[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data22.length; i++) {
+                        table += "<tr>";
+                        for (var key in data22[i]) {
+                            table = table + "<td>" + data22[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data23.length; i++) {
+                        table += "<tr>";
+                        for (var key in data23[i]) {
+                            table = table + "<td>" + data23[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data24.length; i++) {
+                        table += "<tr>";
+                        for (var key in data24[i]) {
+                            table = table + "<td>" + data24[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 2) {
+                    for (var i = 0; i < data30.length; i++) {
+                        table += "<tr>";
+                        for (var key in data30[i]) {
+                            table = table + "<td>" + data30[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data31.length; i++) {
+                        table += "<tr>";
+                        for (var key in data31[i]) {
+                            table = table + "<td>" + data31[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data32.length; i++) {
+                        table += "<tr>";
+                        for (var key in data32[i]) {
+                            table = table + "<td>" + data32[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data33.length; i++) {
+                        table += "<tr>";
+                        for (var key in data33[i]) {
+                            table = table + "<td>" + data33[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data34.length; i++) {
+                        table += "<tr>";
+                        for (var key in data34[i]) {
+                            table = table + "<td>" + data34[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data35.length; i++) {
+                        table += "<tr>";
+                        for (var key in data35[i]) {
+                            table = table + "<td>" + data35[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data36.length; i++) {
+                        table += "<tr>";
+                        for (var key in data36[i]) {
+                            table = table + "<td>" + data36[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 3) {
+                    for (var i = 0; i < data40.length; i++) {
+                        table += "<tr>";
+                        for (var key in data40[i]) {
+                            table = table + "<td>" + data40[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data41.length; i++) {
+                        table += "<tr>";
+                        for (var key in data41[i]) {
+                            table = table + "<td>" + data41[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data42.length; i++) {
+                        table += "<tr>";
+                        for (var key in data42[i]) {
+                            table = table + "<td>" + data42[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data43.length; i++) {
+                        table += "<tr>";
+                        for (var key in data43[i]) {
+                            table = table + "<td>" + data43[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data44.length; i++) {
+                        table += "<tr>";
+                        for (var key in data44[i]) {
+                            table = table + "<td>" + data44[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data45.length; i++) {
+                        table += "<tr>";
+                        for (var key in data45[i]) {
+                            table = table + "<td>" + data45[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data46.length; i++) {
+                        table += "<tr>";
+                        for (var key in data46[i]) {
+                            table = table + "<td>" + data46[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 4) {
+                    for (var i = 0; i < data50.length; i++) {
+                        table += "<tr>";
+                        for (var key in data50[i]) {
+                            table = table + "<td>" + data50[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data51.length; i++) {
+                        table += "<tr>";
+                        for (var key in data51[i]) {
+                            table = table + "<td>" + data51[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data52.length; i++) {
+                        table += "<tr>";
+                        for (var key in data52[i]) {
+                            table = table + "<td>" + data52[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data53.length; i++) {
+                        table += "<tr>";
+                        for (var key in data53[i]) {
+                            table = table + "<td>" + data53[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 5) {
+                    for (var i = 0; i < data60.length; i++) {
+                        table += "<tr>";
+                        for (var key in data60[i]) {
+                            table = table + "<td>" + data60[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data61.length; i++) {
+                        table += "<tr>";
+                        for (var key in data61[i]) {
+                            table = table + "<td>" + data61[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 6) {
+                    for (var i = 0; i < data70.length; i++) {
+                        table += "<tr>";
+                        for (var key in data70[i]) {
+                            table = table + "<td>" + data70[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data71.length; i++) {
+                        table += "<tr>";
+                        for (var key in data71[i]) {
+                            table = table + "<td>" + data71[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data72.length; i++) {
+                        table += "<tr>";
+                        for (var key in data72[i]) {
+                            table = table + "<td>" + data72[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data73.length; i++) {
+                        table += "<tr>";
+                        for (var key in data73[i]) {
+                            table = table + "<td>" + data73[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data74.length; i++) {
+                        table += "<tr>";
+                        for (var key in data74[i]) {
+                            table = table + "<td>" + data74[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 7) {
+                    for (var i = 0; i < data80.length; i++) {
+                        table += "<tr>";
+                        for (var key in data80[i]) {
+                            table = table + "<td>" + data80[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                    for (var i = 0; i < data81.length; i++) {
+                        table += "<tr>";
+                        for (var key in data81[i]) {
+                            table = table + "<td>" + data81[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 8) {
+                    for (var i = 0; i < data90.length; i++) {
+                        table += "<tr>";
+                        for (var key in data90[i]) {
+                            table = table + "<td>" + data90[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 1) {
+                if (departure.value == 0) {
+                    for (var i = 0; i < data10.length; i++) {
+                        table += "<tr>";
+                        for (var key in data10[i]) {
+                            table = table + "<td>" + data10[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 1) {
+                    for (var i = 0; i < data20.length; i++) {
+                        table += "<tr>";
+                        for (var key in data20[i]) {
+                            table = table + "<td>" + data20[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 2) {
+                    for (var i = 0; i < data30.length; i++) {
+                        table += "<tr>";
+                        for (var key in data30[i]) {
+                            table = table + "<td>" + data30[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 3) {
+                    for (var i = 0; i < data40.length; i++) {
+                        table += "<tr>";
+                        for (var key in data40[i]) {
+                            table = table + "<td>" + data40[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 5) {
+                    for (var i = 0; i < data60.length; i++) {
+                        table += "<tr>";
+                        for (var key in data60[i]) {
+                            table = table + "<td>" + data60[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 7) {
+                    for (var i = 0; i < data80.length; i++) {
+                        table += "<tr>";
+                        for (var key in data80[i]) {
+                            table = table + "<td>" + data80[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 8) {
+                    for (var i = 0; i < data90.length; i++) {
+                        table += "<tr>";
+                        for (var key in data90[i]) {
+                            table = table + "<td>" + data90[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 2) {
+                if (departure.value == 0) {
+                    for (var i = 0; i < data11.length; i++) {
+                        table += "<tr>";
+                        for (var key in data11[i]) {
+                            table = table + "<td>" + data11[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 2) {
+                    for (var i = 0; i < data31.length; i++) {
+                        table += "<tr>";
+                        for (var key in data31[i]) {
+                            table = table + "<td>" + data31[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 3) {
+                if (departure.value == 0) {
+                    for (var i = 0; i < data12.length; i++) {
+                        table += "<tr>";
+                        for (var key in data12[i]) {
+                            table = table + "<td>" + data12[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 1) {
+                    for (var i = 0; i < data21.length; i++) {
+                        table += "<tr>";
+                        for (var key in data21[i]) {
+                            table = table + "<td>" + data21[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 3) {
+                    for (var i = 0; i < data41.length; i++) {
+                        table += "<tr>";
+                        for (var key in data41[i]) {
+                            table = table + "<td>" + data41[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 6) {
+                    for (var i = 0; i < data70.length; i++) {
+                        table += "<tr>";
+                        for (var key in data70[i]) {
+                            table = table + "<td>" + data70[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 4) {
+                if (departure.value == 2) {
+                    for (var i = 0; i < data32.length; i++) {
+                        table += "<tr>";
+                        for (var key in data32[i]) {
+                            table = table + "<td>" + data32[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 4) {
+                    for (var i = 0; i < data50.length; i++) {
+                        table += "<tr>";
+                        for (var key in data50[i]) {
+                            table = table + "<td>" + data50[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 5) {
+                if (departure.value == 0) {
+                    for (var i = 0; i < data13.length; i++) {
+                        table += "<tr>";
+                        for (var key in data13[i]) {
+                            table = table + "<td>" + data13[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 2) {
+                    for (var i = 0; i < data33.length; i++) {
+                        table += "<tr>";
+                        for (var key in data33[i]) {
+                            table = table + "<td>" + data33[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 6) {
+                    for (var i = 0; i < data71.length; i++) {
+                        table += "<tr>";
+                        for (var key in data71[i]) {
+                            table = table + "<td>" + data71[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 6) {
+                if (departure.value == 3) {
+                    for (var i = 0; i < data42.length; i++) {
+                        table += "<tr>";
+                        for (var key in data42[i]) {
+                            table = table + "<td>" + data42[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 4) {
+                    for (var i = 0; i < data51.length; i++) {
+                        table += "<tr>";
+                        for (var key in data51[i]) {
+                            table = table + "<td>" + data51[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 7) {
+                if (departure.value == 0) {
+                    for (var i = 0; i < data14.length; i++) {
+                        table += "<tr>";
+                        for (var key in data14[i]) {
+                            table = table + "<td>" + data14[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 1) {
+                    for (var i = 0; i < data22.length; i++) {
+                        table += "<tr>";
+                        for (var key in data22[i]) {
+                            table = table + "<td>" + data22[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 3) {
+                    for (var i = 0; i < data43.length; i++) {
+                        table += "<tr>";
+                        for (var key in data43[i]) {
+                            table = table + "<td>" + data43[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 8) {
+                if (departure.value == 0) {
+                    for (var i = 0; i < data15.length; i++) {
+                        table += "<tr>";
+                        for (var key in data15[i]) {
+                            table = table + "<td>" + data15[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 1) {
+                    for (var i = 0; i < data23.length; i++) {
+                        table += "<tr>";
+                        for (var key in data23[i]) {
+                            table = table + "<td>" + data23[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 2) {
+                    for (var i = 0; i < data34.length; i++) {
+                        table += "<tr>";
+                        for (var key in data34[i]) {
+                            table = table + "<td>" + data34[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 3) {
+                    for (var i = 0; i < data44.length; i++) {
+                        table += "<tr>";
+                        for (var key in data44[i]) {
+                            table = table + "<td>" + data44[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 5) {
+                    for (var i = 0; i < data61.length; i++) {
+                        table += "<tr>";
+                        for (var key in data61[i]) {
+                            table = table + "<td>" + data61[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 7) {
+                    for (var i = 0; i < data81.length; i++) {
+                        table += "<tr>";
+                        for (var key in data81[i]) {
+                            table = table + "<td>" + data81[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 9) {
+                if (departure.value == 0) {
+                    for (var i = 0; i < data16.length; i++) {
+                        table += "<tr>";
+                        for (var key in data16[i]) {
+                            table = table + "<td>" + data16[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 1) {
+                    for (var i = 0; i < data24.length; i++) {
+                        table += "<tr>";
+                        for (var key in data24[i]) {
+                            table = table + "<td>" + data24[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 2) {
+                    for (var i = 0; i < data35.length; i++) {
+                        table += "<tr>";
+                        for (var key in data35[i]) {
+                            table = table + "<td>" + data35[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 3) {
+                    for (var i = 0; i < data45.length; i++) {
+                        table += "<tr>";
+                        for (var key in data45[i]) {
+                            table = table + "<td>" + data45[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 4) {
+                    for (var i = 0; i < data52.length; i++) {
+                        table += "<tr>";
+                        for (var key in data52[i]) {
+                            table = table + "<td>" + data52[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 6) {
+                    for (var i = 0; i < data72.length; i++) {
+                        table += "<tr>";
+                        for (var key in data72[i]) {
+                            table = table + "<td>" + data72[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 11) {
+                if (departure.value == 0) {
+                    for (var i = 0; i < data17.length; i++) {
+                        table += "<tr>";
+                        for (var key in data17[i]) {
+                            table = table + "<td>" + data17[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 2) {
+                    for (var i = 0; i < data36.length; i++) {
+                        table += "<tr>";
+                        for (var key in data36[i]) {
+                            table = table + "<td>" + data36[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 3) {
+                    for (var i = 0; i < data46.length; i++) {
+                        table += "<tr>";
+                        for (var key in data46[i]) {
+                            table = table + "<td>" + data46[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 4) {
+                    for (var i = 0; i < data53.length; i++) {
+                        table += "<tr>";
+                        for (var key in data53[i]) {
+                            table = table + "<td>" + data53[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 6) {
+                    for (var i = 0; i < data73.length; i++) {
+                        table += "<tr>";
+                        for (var key in data73[i]) {
+                            table = table + "<td>" + data73[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 12) {
+                if (departure.value == 0) {
+                    for (var i = 0; i < data18.length; i++) {
+                        table += "<tr>";
+                        for (var key in data18[i]) {
+                            table = table + "<td>" + data18[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            if (time.value == 14) {
+                if (departure.value == 0) {
+                    for (var i = 0; i < data19.length; i++) {
+                        table += "<tr>";
+                        for (var key in data19[i]) {
+                            table = table + "<td>" + data19[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+                if (departure.value == 6) {
+                    for (var i = 0; i < data74.length; i++) {
+                        table += "<tr>";
+                        for (var key in data74[i]) {
+                            table = table + "<td>" + data74[i][key] + "</td>";
+                        }
+                        table += "</tr>";
+                    }
+                }
+            }
+            document.body.innerHTML=null;
+            table += "</table>"
+            document.body.innerHTML = table;
+        }
+        
+    </script>
+</head>
+<body>
+    <div class="main">
+        <div class="character">
+                出发时间
+        </div>
+        
+        <select name="time" id="time" class="selectpicker" data-style="btn-info">
+            <option value="0">所有时段</option>
+            <option value="1">7:00-7:59</option>
+            <option value="2">8:00-8:59</option>
+            <option value="3">9:00-9:59</option>
+            <option value="4">10:00-10:59</option>
+            <option value="5">11:00-11:59</option>
+            <option value="6">12:00-12:59</option>
+            <option value="7">13:00-13:59</option>
+            <option value="8">14:00-14:59</option>
+            <option value="9">15:00-15:59</option>
+            <option value="10">16:00-16:59</option>
+            <option value="11">17:00-17:59</option>
+            <option value="12">18:00-18:59</option>
+            <option value="13">19:00-19:59</option>
+            <option value="14">20:00-20:59</option>
+        </select>
+        <br>
+        <div class="character">
+                起始地点
+        </div>
+    
+        <select name="departure" id="departure" class="selectpicker" data-style="btn-info">
+            <option value="0">校本部图书馆前坪</option>
+            <option value="1">铁道校区办公楼前坪</option>
+            <!--默认选中-->
+            <option value="2">铁道校区图书馆前坪</option>
+            <option value="3">湘雅医学院老校区</option>
+            <option value="4">湘雅医学院新校区</option>
+            <option value="5">湘雅医学院新校区大门</option>
+            <option value="6">新校区</option>
+            <option value="7">科教新村</option>
+            <option value="8">东塘</option>
+        </select>
+        
+    </div>
+    <div class="query">
+        <div id="picture1">
+            <img src="/static/image/左翅膀.png">
+        </div>
+        <div>
+            <input type="button" value="提交" id="button" onclick="tosubmit(this)" />
+        </div>
+        <div id="picture2">
+            <img src="/static/image/右翅膀.png">
+        </div>
+    </div>
+</body>
+</html>
