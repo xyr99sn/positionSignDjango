@@ -106,13 +106,13 @@ def getUserInfo(request):
 
 @login_required
 def register(request):
+    try:
+        user_id = request.session[SESSION_KEY]
+    except KeyError:
+        response = JsonResponse(status=False, message="未登录")
+        return response
     if request.method == 'POST':
         try:
-            try:
-                user_id = request.session[SESSION_KEY]
-            except KeyError:
-                response = JsonResponse(status=False, message="未登录")
-                return response
             user = User.objects.get(id=user_id)
             user.name = request.POST.get("name")
             user.std_id = request.POST.get("std_id")
@@ -206,6 +206,7 @@ def getScoreOrder(request):
     except KeyError:
         response = JsonResponse(status=False, message='用户未登录')
         return response
+    
     if request.method == "POST":
         rank = get_order_by_user(user_id)
         begin = request.POST.get('begin') * 10
@@ -226,8 +227,16 @@ def getScoreOrder(request):
         }
         orderList = []
         orders = get_begin_to_end_score(begin, end)
-        for single_order in orders:
-            
+        userIdLists = orders[::2]
+        scoreLists = orders[1::2]
+        for i in len(userIdLists):
+            person_user_req = User.objects.get(id=userIdLists[i])
+            user_info = {
+                'nickname': person_user_req.wx_nickname,
+                'avatar': user.wx_avatar,
+                'score': scoreLists[i],
+            }
+            orderList.append(user_info)
 
         response.add_value('order', order)
         response.add_value('orderList', orderList)
@@ -244,65 +253,61 @@ def addRecord(request):
         response = JsonResponse(status=False, message='用户未登录')
         return response
     if request.method == 'POST':
+        position_id = request.POST.get('id')
+        longitude = float(request.POST.get('longitude'))
+        latitude = float(request.POST.get('latitude'))
+        send_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(request.POST.get('time')))
+        position = Position.objects.get(id=position_id)
+        user = User.objects.get(id=user_id)
         try:
-            position_id = request.POST.get('id')
-            longitude = float(request.POST.get('longitude'))
-            latitude = float(request.POST.get('latitude'))
-            send_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(request.POST.get('time')))
-            position = Position.objects.get(id=position_id)
-            user = User.objects.get(id=user_id)
-            try:
-                Record.objects.get(user=user, position=position)
-                response = JsonResponse(status=False, message='已打卡')
+            Record.objects.get(user=user, position=position)
+            response = JsonResponse(status=False, message='已打卡')
+            return response
+        except ObjectDoesNotExist:
+            url = 'https://restapi.amap.com/v3/distance'
+            params = {
+                'key': '0573fb2a6b6b28a0e970988cefd18e44',
+                'origins': str(longitude) + str(latitude),
+                'destination': str(position.longitude) + str(position.latitude)
+            }
+            r = requests.get(url, params=params)
+            distance = r.json().get('results').get('distance')
+            sign_time = timezone.now()
+            if not transformTime(position.transcript.start_time) <= transformTime(sign_time) <= transformTime(position.transcript.end_time):
+                response = JsonResponse(status=False, message='不在打卡时间范围内')
                 return response
+            
+            if not distance <= position.radius:
+                response = JsonResponse(status=False, message='不在打卡范围')
+                return response
+                
+            new_record = Record()
+            fixed_score = Position.objects.get(id=position_id).score
+            lucky_score = random.randint(fixed_score/10)
+            new_record.is_signed = True
+            new_record.score = fixed_score + lucky_score
+            new_record.time = send_time
+            new_record.created_time = sign_time
+            new_record.user = user
+            new_record.position = position
+            new_record.transcript = position.transcript
+            new_record.save()
+
+            record_add(user.id, fixed_score + lucky_score)
+
+            try:
+                Join.objects.get(user=user).filter(transcript=position.transcript)
             except ObjectDoesNotExist:
-                url = 'https://restapi.amap.com/v3/distance'
-                params = {
-                    'key': '0573fb2a6b6b28a0e970988cefd18e44',
-                    'origins': str(longitude) + str(latitude),
-                    'destination': str(position.longitude) + str(position.latitude)
+                join_record = {
+                    'time': timezone.now(),
+                    'user': user,
+                    'transcript': position.transcript
                 }
-                r = requests.get(url, params=params)
-                distance = r.json().get('results').get('distance')
-                sign_time = timezone.now()
-                if transformTime(position.transcript.start_time) <= transformTime(sign_time) <= transformTime(position.transcript.end_time):
-                    if distance <= position.radius:
-                        new_record = Record()
-                        fixed_score = Position.objects.get(id=position_id).score
-                        lucky_score = random.randint(fixed_score/10)
-                        new_record.is_signed = True
-                        new_record.score = fixed_score + lucky_score
-                        new_record.time = send_time
-                        new_record.created_time = sign_time
-                        new_record.user = user
-                        new_record.position = position
-                        new_record.transcript = position.transcript
-                        new_record.save()
+                Join.objects.create(**join_record)
 
-                        record_add(user.id, fixed_score + lucky_score)
-
-                        try:
-                            Join.objects.get(user=user).filter(transcript=position.transcript)
-                        except ObjectDoesNotExist:
-                            join_record = {
-                                'time': timezone.now(),
-                                'user': user,
-                                'transcript': position.transcript
-                            }
-                            Join.objects.create(**join_record)
-
-                        response = JsonResponse(status=True, message='签到成功')
-                        response.add_value('score', fixed_score)
-                        response.add_value('lucky', lucky_score)
-                        return response
-                    else:
-                        response = JsonResponse(status=False, message='不在打卡范围')
-                        return response
-                else:
-                    response = JsonResponse(status=False, message='不在打卡时间范围内')
-                    return response
-        except KeyError:
-            response = JsonResponse(status=False, message='参数错误')
+            response = JsonResponse(status=True, message='签到成功')
+            response.add_value('score', fixed_score)
+            response.add_value('lucky', lucky_score)
             return response
     else:
         response = JsonResponse(status=False, message='访问方式错误')
